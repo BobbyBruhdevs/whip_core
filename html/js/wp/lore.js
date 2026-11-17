@@ -100,12 +100,15 @@ const frame0 = () => ({ x: 50, y: 50, z: 1 });
 const frameCopy = (fr) => (fr ? { x: +fr.x, y: +fr.y, z: +fr.z } : frame0());
 
 /** Why a picture link would be refused, or null (the server's DirectorLore.pictureProblem decides; this says it
- *  sooner): it starts with an accepted link and is a plain address after it. */
+ *  sooner): with no accepted starts set, any plain https link is taken; with starts, it must start with one of them
+ *  and be a plain address after it. */
 function pictureProblem(url) {
     url = trim(url);
     if (!url) return null;
     const starts = arr(st.data && st.data.pictureLinks);
-    if (!starts.length) return 'Pictures are switched off (Config: Picture links accepted)';
+    if (!starts.length) {
+        return /^https:\/\/[\w\-._/~%?&=+#:]+$/.test(url) ? null : 'That link is not a plain https address';
+    }
     const start = starts.find((x) => url.startsWith(x));
     if (!start) return `Only links starting with ${starts.join(' or ')} are accepted`;
     const rest = url.slice(start.length);
@@ -475,7 +478,7 @@ function pictureEditor(c) {
 
     const starts = arr(st.data && st.data.pictureLinks);
     const site = starts.length ? starts[0].replace(/^https:\/\//, '').split('/')[0].replace(/^r2\./, '') : '';
-    const url = WP.input({ value: p.url, placeholder: site ? `Link from ${site}` : 'Pictures are switched off' });
+    const url = WP.input({ value: p.url, placeholder: site ? `Link from ${site}` : 'https://…' });
     url.classList.add('wl-input');
     url.maxLength = 255;
     url.spellcheck = false;

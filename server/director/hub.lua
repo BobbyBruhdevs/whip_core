@@ -266,7 +266,7 @@ end, 30)
 -- ============================================
 
 cb('lore', {}, function(source)
-    -- pictureLinks: the link starts a picture may have (the form says so, and checks before saving).
+    -- pictureLinks: the link starts a picture may have (empty: any https link), for the form's placeholder and check.
     -- voice: the voice lines the form shows, their link starts, on or not (director/lore_voice.lua).
     return { lore = DirectorLore.list(true), ready = DirectorLore.ready, admin = Permissions.has(source, ADMIN),
              pictureLinks = DirectorLore.pictureLinks(), voice = DirectorLore.voiceInfo() }

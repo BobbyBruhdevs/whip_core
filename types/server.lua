@@ -317,7 +317,7 @@ function whip_core:SwitchScenario(key, on, why) end
 ---@field bankName string|nil    what its payments are from (nil: its name)
 ---@field payName string         bankName, else name
 ---@field notes string|nil       its personality, for whoever writes it
----@field picture string|nil     its profile picture's link (one of Config.LorePictureLinks), nil for none
+---@field picture string|nil     its profile picture's link (any https link, unless Config.LorePictureLinks lists sites), nil for none
 ---@field pictureFrame { x: number, y: number, z: number }|nil  what of the picture shows in a round frame: x, y the point kept in view (0-100, % across and down), z the zoom (1-3); nil: the middle, unzoomed
 ---@field retired boolean        out of the pickers, its records kept
 ---@field accountId number|nil   its bank account (owned by no character), once it has paid someone
@@ -337,7 +337,7 @@ function whip_core:GetLoreCharacter(key) end
 ---@async
 function whip_core:LoreSay(key, line, opts) end
 
---- A profile picture as whip takes one (a link on Config.LorePictureLinks' sites, its framing cleaned): true, frame
+--- A profile picture as whip takes one (any https link, or one of Config.LorePictureLinks' sites when set; its framing cleaned): true, frame
 --- (nil for the plain framing, or an empty link), or false, why.
 ---@param url string
 ---@param frame { x: number, y: number, z: number }|nil

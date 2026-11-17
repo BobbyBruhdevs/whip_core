@@ -276,6 +276,7 @@ end
 
 --- The link starts a picture may have (Config.LorePictureLinks), each 'https://' + a site + '/'. One without its
 --- '/' after the site is ignored: 'https://r2.fivemanage.com' would also let 'https://r2.fivemanage.com.evil.io/' in.
+--- An empty list (the default) puts no limit on where a picture comes from: any https link is taken.
 function DirectorLore.pictureLinks()
     local out = {}
     for _, start in ipairs(type(Config.LorePictureLinks) == 'table' and Config.LorePictureLinks or {}) do
@@ -284,14 +285,20 @@ function DirectorLore.pictureLinks()
     return out
 end
 
---- Why a picture link is refused, or nil. Every player's game loads it, so it must start with one of the accepted
---- link starts and be a plain address after it (letters, digits, - . _ /): no query, no spaces, nothing that
---- could break out of the picture's tag.
+--- Why a picture link is refused, or nil. Every player's game loads it, so it must be a plain https address (letters,
+--- digits and - . _ / ~, a query after ? with & = + % and #, a port's :, or the starts one of the accepted
+--- link starts (Config.LorePictureLinks)): no spaces, no angle brackets, nothing that could break out of the
+--- picture's tag. With no starts set (the default), any https link is taken.
 function DirectorLore.pictureProblem(url)
     if url == '' then return nil end
     if #url > 255 then return 'A picture link is at most 255 characters' end
     local starts = DirectorLore.pictureLinks()
-    if #starts == 0 then return 'Pictures are switched off (Config: Picture links accepted)' end
+    if #starts == 0 then
+        if not url:match('^https://[%w%-%._/~%%%?&=%+#:]+$') then
+            return 'That link is not a plain https address'
+        end
+        return nil
+    end
     for _, start in ipairs(starts) do
         if url:sub(1, #start) == start then
             local rest = url:sub(#start + 1)
@@ -776,8 +783,8 @@ exports('GetLoreCharacter', function(key)
 end)
 
 --- A profile picture as whip takes one, for a resource that keeps its own (whip_phone: a player's contact card):
---- the link on the accepted sites (Config.LorePictureLinks), and its framing cleaned. `true, frame` (frame nil for
---- none) or `false, why`. An empty link is no picture: `true, nil`.
+--- any https link (or one of the accepted sites', when Config.LorePictureLinks sets them), framing cleaned.
+--- `true, frame` (frame nil for none) or `false, why`. An empty link is no picture: `true, nil`.
 exports('CheckPicture', function(url, frame)
     url = type(url) == 'string' and trim(url) or ''
     if url == '' then return true, nil end

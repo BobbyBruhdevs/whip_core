@@ -150,11 +150,14 @@ function picProblem(rows, own) {
         const at = 'Picture ' + (i + 1) + ': ';
         if (!own.has(r.image)) {
             if (!r.image) return at + 'paste a picture link';
-            if (!links.length) return at + 'pictures are switched off (Config: Picture links accepted)';
-            const start = links.find((s) => r.image.startsWith(s));
-            if (!start) return at + 'a link starting with ' + links.join(' or ');
-            const rest = r.image.slice(start.length);
-            if (!rest || !/^[\w\-./]+$/.test(rest) || rest.includes('..')) return at + 'that link is not a picture\'s address';
+            if (!links.length) {
+                if (!/^https:\/\/[\w\-._/~%?&=+#:]+$/.test(r.image)) return at + 'not a plain https address';
+            } else {
+                const start = links.find((s) => r.image.startsWith(s));
+                if (!start) return at + 'a link starting with ' + links.join(' or ');
+                const rest = r.image.slice(start.length);
+                if (!rest || !/^[\w\-./]+$/.test(rest) || rest.includes('..')) return at + 'that link is not a picture\'s address';
+            }
         }
         if (!r.field) continue;
         const needsNumber = PIC_NUMBER_OPS.has(r.op) || (r.field === 'amount' && r.op === 'is');
