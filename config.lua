@@ -1298,11 +1298,11 @@ Config.FurnishTurnSteps = { 15.0, 45.0, 1.0 }   -- degrees per snap, dragging a 
 -- about 100 bytes sent to every player when the set appears, so 256 is about 25 KB. Much higher makes a big message.
 Config.PropSetMaxProps = 256
 
--- Profile pictures for lore characters and players' phones (Settings > My card). Only a link starting with one of
--- these is accepted, and every player's game loads the picture from that site, so keep it to an image host you
--- trust. To accept only your own account's pictures, use your account's address, such as
--- 'https://r2.fivemanage.com/abc123/'.
-Config.LorePictureLinks = { 'https://r2.fivemanage.com/' }
+-- Profile pictures for lore characters and players' phones (Settings > My card). Any https link is accepted by
+-- default, and every player's game loads the picture from its site. To take only pictures from hosts you trust,
+-- list their addresses here (each ending in '/', such as 'https://r2.fivemanage.com/abc123/'): a link starting
+-- with one of them is then the only kind taken.
+Config.LorePictureLinks = {}
 
 -- A lore character can speak out loud in the world from its NPC (Director > Lore characters > Voice lines: a
 -- recording's link, an .mp3, for each line). It is heard like a player's voice by the players near it. Needs

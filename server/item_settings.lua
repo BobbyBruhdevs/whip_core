@@ -40,8 +40,8 @@
 -- { image, field, op, value } each, the first whose test passes drawn, the item's own when none does. `field` ''
 -- is always; 'amount' the slot's count; any other a metadata field, tested by `op` (is, above, below, atLeast, atMost,
 -- has, empty) against `value`. Its default is the definition's own `images`, so Reset puts them back. A row's
--- picture is one of the definition's own, or a link to one an admin pasted, from a site Config.LorePictureLinks
--- accepts. What the page offers to test (ItemSettings.pictureFields): the count for an item that stacks, the
+-- picture is one of the definition's own, or a link to one an admin pasted: any https link, or one from a site
+-- Config.LorePictureLinks accepts, when it lists any. What the page offers to test (ItemSettings.pictureFields): the count for an item that stacks, the
 -- definition's `pictureFields` ({ key, label, type = 'bool' | 'number' | 'text' }), its card's metaFields, and any
 -- field its own pictures test.
 
@@ -238,7 +238,7 @@ function ItemSettings.pictureRule(row)
 end
 
 --- Why an admin's pasted picture is refused, or nil: the lore pictures' rule (server/director/lore.lua), one list of
---- the sites a picture may come from (Config.LorePictureLinks).
+--- the sites a picture may come from (Config.LorePictureLinks; empty: any https link).
 ---@param url string
 ---@return string|nil
 local function linkProblem(url)

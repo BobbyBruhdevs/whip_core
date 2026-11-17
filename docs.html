@@ -4075,7 +4075,7 @@ local capacity = exports.whip_core:GetItemSetting('my_guns_mag', 'capacity')   -
 <ul>
 <li><strong>What it is</strong>, with <strong>Give to me</strong> and <strong>Edit hand position</strong>: how it's held out to give or throw, pose by pose (<kbd>H</kbd> next pose, <kbd>R</kbd> move or turn), plus <code>playerWalk</code> and <code>grab</code>.</li>
 <li><strong>Its settings</strong>: name, description, weight (for <code>config.lua</code>'s items also stacking, cooldown and kind) and its own, each with <strong>Reset</strong>. <strong>Apply</strong> saves for everyone (<a href="#config-panel">as Config does</a>); only a permanent admin can.</li>
-<li><strong>What players see</strong>: its pictures and what shows each (<a href="#item-images">pictures that change</a>). <strong>Add picture</strong> takes a link from a site in <em>Picture links accepted</em> (Fivemanage by default).</li>
+<li><strong>What players see</strong>: its pictures and what shows each (<a href="#item-images">pictures that change</a>). <strong>Add picture</strong> takes any https picture link (sites listed in <em>Picture links accepted</em>, when set, only).</li>
 </ul>
 
 <h3 id="item-schema">Item definition</h3>
@@ -11231,7 +11231,7 @@ set whip_voice_api    "https://your-project.livekit.cloud"   # where this FiveM 
 <tr><td>Didn't work</td><td>It couldn't ring at all; the run's log says why</td></tr>
 </table>
 <p>Several players each get their own call, and the card goes on by the best outcome. In a <em>Test</em> it runs for real, but rings only you.</p>
-<p><strong>The caller's picture.</strong> In Lore characters, press <em>Edit picture</em>, paste a Fivemanage picture link, frame it and <em>Save</em>. It shows on the call screen and in Contacts, Messages and Recents. Accepted sites are <em>Picture links accepted</em> in <code>/whip</code> → Settings → Config → Server.</p>
+<p><strong>The caller's picture.</strong> In Lore characters, press <em>Edit picture</em>, paste a picture link (any https link, unless <em>Picture links accepted</em> names sites), frame it and <em>Save</em>. It shows on the call screen and in Contacts, Messages and Recents. Accepted sites are <em>Picture links accepted</em> in <code>/whip</code> → Settings → Config → Server.</p>
 
 <h3>When it doesn't play</h3>
 <table class="event-table">
@@ -11284,7 +11284,7 @@ set whip_voice_api    "https://your-project.livekit.cloud"   # where this FiveM 
 <div class="export-card" data-search="checkpicture picture link profile photo frame fivemanage">
 <div class="export-header"><span class="export-name">CheckPicture(url, frame)</span><span class="export-side side-server">SERVER</span></div>
 <div class="export-body">
-  <p>Checks a profile picture as WHIP takes one, for a resource that keeps its own (whip_phone's contact card). The link must be on the accepted sites (<em>Picture links accepted</em>); an empty link is no picture. <code>frame</code> is <code>{ x, y, z }</code> as Edit picture makes it: the middle, 0 to 100 across and down, and the zoom, 1 to 3. It comes back cleaned; the plain framing (the middle, no zoom) is none.</p>
+  <p>Checks a profile picture as WHIP takes one, for a resource that keeps its own (whip_phone's contact card). The link must be a plain https address (any host, unless <em>Picture links accepted</em> names sites to take pictures from); an empty link is no picture. <code>frame</code> is <code>{ x, y, z }</code> as Edit picture makes it: the middle, 0 to 100 across and down, and the zoom, 1 to 3. It comes back cleaned; the plain framing (the middle, no zoom) is none.</p>
   <div class="return-info"><strong>Returns: </strong><code>true, frame</code> (<code>frame</code> nil for none, and for an empty link), or <code>false, why</code></div>
 </div></div>
 <h2 id="voice-speakers">Speakers</h2>
@@ -11681,7 +11681,7 @@ end</code></pre>
 <tr><td><code>FurnishPlaceRange</code></td><td><code>8.0</code></td><td>A picked prop lands on what you look at within this; further, 3 m ahead</td></tr>
 <tr><td><code>FurnishMoveSteps</code> / <code>FurnishTurnSteps</code></td><td><code>{ 0.05, 0.25, 1.0 }</code> / <code>{ 15.0, 45.0, 1.0 }</code></td><td><kbd>Shift</kbd>-drag snaps (metres / degrees); <kbd>G</kbd> cycles</td></tr>
 <tr><td><code>PropSetMaxProps</code></td><td><code>256</code></td><td>Most props in a set (<a href="#showpropset"><code>ShowPropSet</code></a>); about 100 bytes each to every player</td></tr>
-<tr><td><code>LorePictureLinks</code></td><td><code>{ 'https://r2.fivemanage.com/' }</code></td><td>Allowed picture link prefixes (lore characters, phone cards). Every player loads them: use a host you trust</td></tr>
+<tr><td><code>LorePictureLinks</code></td><td><code>{}</code></td><td>Picture link prefixes to take pictures from (lore characters, phone cards, item pictures). Empty: any https link. Every player loads them: use a host you trust</td></tr>
 <tr><td><code>LoreVoice</code></td><td>table</td><td>Lore NPCs speaking (needs whip_voice's bot): <code>Enabled</code>, <code>Links</code>, <code>Range</code> (15 m), <code>GreetRange</code> (4 m), <code>ByeRange</code> (10 m), <code>GreetAgainMinutes</code> (3), <code>ReactAgainSeconds</code> (6), <code>Gestures</code></td></tr>
 <tr><td><code>PropertySignPosts</code></td><td>2 boards</td><td>For Sale boards: <code>model</code>, <code>label</code>, <code>panel</code> (<code>w</code>, <code>h</code>), <code>ink</code>, <code>accent</code>, <code>back</code>. <code>config.lua</code> only</td></tr>
 <tr><td><code>PropClusters</code> / <code>PropCategories</code></td><td>7 / 35</td><td>The furnisher's groups and categories, each with a glyph</td></tr>

@@ -780,7 +780,7 @@ ConfigSchema = {
               item = { type = 'string', maxLen = 120, pattern = '^https://[%w%-%.]+%.[%a][%a]+/[%w%-%._/]*$',
                        patternWhy = 'must be https:// then a web address, ending in /' },
               label = 'Picture links accepted',
-              help = 'A profile picture (a lore character\'s, or a player\'s on their phone\'s My card) is a link, and only one starting with one of these is taken. Every player\'s game loads it from that site, so keep it to an image host you trust. Fivemanage by default; put your own account\'s address (https://r2.fivemanage.com/your-id/) to take only your own pictures, and players can\'t use their own then. Empty: no pictures.' },
+              help = 'A profile picture (a lore character\'s, or a player\'s on their phone\'s My card) is a link. Every player\'s game loads it from its site. Empty (the default): any https link is taken. List one or more starts (such as https://r2.fivemanage.com/your-id/) to take only pictures from those sites.' },
             { path = 'Sentinel.enabled', type = 'bool', sides = 'server',
               label = 'Sentinel (tamper guard)',
               help = 'Watches whip\'s values on players and cars; one a player\'s game changes is put back and logged as a tamper, in the Event Monitor too. Off stops watching.' },
